@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6HolidayMapper">
+    
+    <resultMap type="AcsV6Holiday" id="AcsV6HolidayResult">
+        <result property="month"    column="month"    />
+        <result property="holidays"    column="holidays"    />
+    </resultMap>
+
+    <sql id="selectAcsV6HolidayVo">
+        select month, holidays from acs_v6_holiday
+    </sql>
+
+    <select id="selectAcsV6HolidayList" parameterType="AcsV6Holiday" resultMap="AcsV6HolidayResult">
+        <include refid="selectAcsV6HolidayVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAcsV6HolidayById" parameterType="String" resultMap="AcsV6HolidayResult">
+        <include refid="selectAcsV6HolidayVo"/>
+        where month = #{month}
+    </select>
+        
+    <insert id="insertAcsV6Holiday" parameterType="AcsV6Holiday">
+        insert into acs_v6_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="month != null">month,</if>
+            <if test="holidays != null">holidays,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="month != null">#{month},</if>
+            <if test="holidays != null">#{holidays},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6Holiday" parameterType="AcsV6Holiday">
+        update acs_v6_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="holidays != null">holidays = #{holidays},</if>
+        </trim>
+        where month = #{month}
+    </update>
+
+    <delete id="deleteAcsV6HolidayById" parameterType="String">
+        delete from acs_v6_holiday where month = #{month}
+    </delete>
+
+    <delete id="deleteAcsV6HolidayByIds" parameterType="String">
+        delete from acs_v6_holiday where month in 
+        <foreach item="month" collection="array" open="(" separator="," close=")">
+            #{month}
+        </foreach>
+    </delete>
+</mapper>

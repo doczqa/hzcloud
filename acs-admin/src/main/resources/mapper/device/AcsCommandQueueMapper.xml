@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.device.mapper.AcsCommandQueueMapper">
+    
+    <resultMap type="AcsCommandQueue" id="AcsCommandQueueResult">
+        <result property="taskId"    column="task_id"    />
+        <result property="controllerId"    column="controller_id"    />
+        <result property="ip"    column="ip"    />
+        <result property="doorPin"    column="door_pin"    />
+        <result property="command"    column="command"    />
+        <result property="data"    column="data"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="issueTime"    column="issue_time"    />
+        <result property="processTime"    column="process_time"    />
+        <result property="elapsedTime"    column="elapsed_time"    />
+        <result property="status"    column="status"    />
+        <result property="resultCode"    column="result_code"    />
+        <result property="resultMsg"    column="result_msg"    />
+    </resultMap>
+
+    <sql id="selectAcsCommandQueueVo">
+        select task_id, controller_id, ip,door_pin, command, data, create_time, issue_time, process_time, elapsed_time, status, result_code, result_msg from acs_command_queue
+    </sql>
+
+    <select id="selectAcsCommandQueueList" parameterType="AcsCommandQueue" resultMap="AcsCommandQueueResult">
+        <include refid="selectAcsCommandQueueVo"/>
+        <where>  
+            <if test="controllerId != null "> and controller_id = #{controllerId}</if>
+            <if test="ip != null and ip != ''"> and ip = #{ip}</if>
+            <if test="doorPin != null "> and door_pin = #{doorPin}</if>
+            <if test="command != null  and command != ''"> and command = #{command}</if>
+            <if test="data != null  and data != ''"> and data = #{data}</if>
+            <if test="issueTime != null "> and issue_time = #{issueTime}</if>
+            <if test="elapsedTime != null "> and elapsed_time = #{elapsedTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="resultMsg != null  and resultMsg != ''"> and result_msg = #{resultMsg}</if>
+            and result_code = '1'
+        </where>
+    </select>
+    
+    <select id="selectAcsCommandQueueById" parameterType="Long" resultMap="AcsCommandQueueResult">
+        <include refid="selectAcsCommandQueueVo"/>
+        where task_id = #{taskId}
+    </select>
+        
+    <insert id="insertAcsCommandQueue" parameterType="AcsCommandQueue" useGeneratedKeys="true" keyProperty="taskId">
+        insert into acs_command_queue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="controllerId != null">controller_id,</if>
+            <if test="ip != null">ip,</if>
+            <if test="doorPin != null">door_pin,</if>
+            <if test="command != null">command,</if>
+            <if test="data != null">data,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="issueTime != null">issue_time,</if>
+            <if test="elapsedTime != null">elapsed_time,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="controllerId != null">#{controllerId},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="doorPin != null">#{doorPin},</if>
+            <if test="command != null">#{command},</if>
+            <if test="data != null">#{data},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="issueTime != null">#{issueTime},</if>
+            <if test="elapsedTime != null">#{elapsedTime},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchinsertAcsCommandQueue">
+        insert into acs_command_queue (controller_id, ip, door_pin, command, data, create_time, status)
+        values
+        <foreach collection="list" item="item" index="index"  separator=",">
+            (#{item.controllerId}, #{item.ip}, #{item.doorPin},#{item.command},#{item.data},#{item.createTime},#{item.status})
+        </foreach>
+    </insert>
+
+    <update id="updateAcsCommandQueue" parameterType="AcsCommandQueue">
+        update acs_command_queue
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="controllerId != null">controller_id = #{controllerId},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="doorPin != null">door_pin = #{doorPin},</if>
+            <if test="command != null">command = #{command},</if>
+            <if test="data != null">data = #{data},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="issueTime != null">issue_time = #{issueTime},</if>
+            <if test="processTime != null">process_time = #{processTime},</if>
+            <if test="elapsedTime != null">elapsed_time = #{elapsedTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="resultCode != null">result_code = #{resultCode},</if>
+            <if test="resultMsg != null">result_msg = #{resultMsg},</if>
+        </trim>
+        where task_id = #{taskId}
+    </update>
+
+    <delete id="deleteAcsCommandQueueById" parameterType="Long">
+        delete from acs_command_queue where task_id = #{taskId}
+    </delete>
+
+    <delete id="deleteAcsCommandQueueByIds" parameterType="String">
+        delete from acs_command_queue where task_id in 
+        <foreach item="taskId" collection="array" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </delete>
+
+    <select id="selectAcsCommandQueueListDataFilter" parameterType="AcsCommandQueue" resultMap="AcsCommandQueueResult">
+        select distinct cq.task_id, cq.controller_id, cq.ip,cq.door_pin, cq.command, cq.data, cq.create_time, cq.issue_time, cq.process_time, cq.elapsed_time, cq.status, cq.result_code, cq.result_msg from acs_command_queue cq
+        LEFT JOIN acs_device_controller dc ON cq.controller_id = dc.controller_id
+        LEFT JOIN acs_device_zone dz on dc.controller_id IN (SELECT controller_id FROM acs_device_zone_controller WHERE zone_id = dz.zone_id )
+        LEFT JOIN sys_dept d on dz.dept_id = d.dept_id
+        <where>  
+            <if test="controllerId != null "> and cq.controller_id = #{controllerId}</if>
+            <if test="ip != null and ip != ''"> and cq.ip = #{ip}</if>
+            <if test="doorPin != null "> and cq.door_pin = #{doorPin}</if>
+            <if test="command != null  and command != ''"> and cq.command = #{command}</if>
+            <if test="data != null  and data != ''"> and cq.data = #{data}</if>
+            <if test="issueTime != null "> and cq.issue_time = #{issueTime}</if>
+            <if test="elapsedTime != null "> and cq.elapsed_time = #{elapsedTime}</if>
+            <if test="status != null  and status != ''"> and cq.status = #{status}</if>
+            <if test="resultMsg != null  and resultMsg != ''"> and cq.result_msg = #{resultMsg}</if>
+            and cq.result_code = '1'
+            and dz.status = '0'
+            and dz.del_flag = '0'
+        </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+</mapper>

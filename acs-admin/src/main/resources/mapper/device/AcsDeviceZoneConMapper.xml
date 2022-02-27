@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.device.mapper.AcsDeviceZoneConMapper">
+
+	<resultMap type="AcsDeviceZoneCon" id="AcsDeviceZoneConResult">
+		<result property="zoneId"     column="zone_id"      />
+		<result property="controllerId"     column="controller_id"      />
+	</resultMap>
+
+	<delete id="deleteZoneConByZoneId" parameterType="Long">
+		delete from acs_device_zone_controller where zone_id=#{zoneId}
+	</delete>
+	
+	<select id="countZoneConByControllerId" resultType="Integer">
+	    select count(1) from acs_device_zone_controller where controller_id=#{controllerId}  
+	</select>
+	
+	<delete id="deleteZoneCon" parameterType="Long">
+ 		delete from acs_device_zone_controller where zone_id in
+ 		<foreach collection="array" item="zoneId" open="(" separator="," close=")">
+ 			#{zoneId}
+        </foreach> 
+ 	</delete>
+	
+	<insert id="batchZoneCon">
+		insert into acs_device_zone_controller(zone_id, controller_id) values
+		<foreach item="item" index="index" collection="list" separator=",">
+			(#{item.zoneId},#{item.controllerId})
+		</foreach>
+	</insert>
+	
+	<delete id="deleteZoneConInfo" parameterType="AcsDeviceZoneCon">
+		delete from acs_device_zone_controller where zone_id=#{zoneId} and controller_id=#{controllerId}
+	</delete>
+	
+	<delete id="deleteZoneConInfos">
+	    delete from acs_device_zone_controller where controller_id=#{controllerId} and zone_id in
+ 	    <foreach collection="zoneIds" item="zoneId" open="(" separator="," close=")">
+ 	        #{zoneId}
+            </foreach> 
+	</delete>
+</mapper> 

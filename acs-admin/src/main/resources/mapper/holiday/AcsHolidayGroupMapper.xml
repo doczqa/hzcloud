@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AcsHolidayGroupMapper">
+    
+    <resultMap type="AcsHolidayGroup" id="AcsHolidayGroupResult">
+        <result property="groupId"    column="group_id"    />
+        <result property="groupName"    column="group_name"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAcsHolidayGroupVo">
+        select group_id, group_name, status, del_flag, create_by, create_time, update_by, update_time, remark from acs_holiday_group
+    </sql>
+
+    <select id="selectAcsHolidayGroupList" parameterType="AcsHolidayGroup" resultMap="AcsHolidayGroupResult">
+        <include refid="selectAcsHolidayGroupVo"/>
+        <where>  
+            <if test="groupName != null  and groupName != ''"> and group_name like concat('%', #{groupName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAcsHolidayGroupById" parameterType="Long" resultMap="AcsHolidayGroupResult">
+        <include refid="selectAcsHolidayGroupVo"/>
+        where group_id = #{groupId}
+    </select>
+        
+    <insert id="insertAcsHolidayGroup" parameterType="AcsHolidayGroup" useGeneratedKeys="true" keyProperty="groupId">
+        insert into acs_holiday_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">group_name,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">#{groupName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsHolidayGroup" parameterType="AcsHolidayGroup">
+        update acs_holiday_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupName != null">group_name = #{groupName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where group_id = #{groupId}
+    </update>
+
+    <delete id="deleteAcsHolidayGroupById" parameterType="Long">
+        delete from acs_holiday_group where group_id = #{groupId}
+    </delete>
+
+    <delete id="deleteAcsHolidayGroupByIds" parameterType="String">
+        delete from acs_holiday_group where group_id in 
+        <foreach item="groupId" collection="array" open="(" separator="," close=")">
+            #{groupId}
+        </foreach>
+    </delete>
+</mapper>

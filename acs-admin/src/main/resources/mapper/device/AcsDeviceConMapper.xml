@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.device.mapper.AcsDeviceConMapper">
+    
+    <resultMap type="AcsDeviceCon" id="AcsDeviceConResult">
+        <result property="controllerId"    column="controller_id"    />
+        <result property="controllerName"    column="controller_name"    />
+        <result property="ip"    column="ip"    />
+        <result property="port"    column="port"    />
+        <result property="type"    column="type"    />
+        <result property="capacity"    column="capacity"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="status"    column="status"    />
+        <result property="alarmStatus"    column="alarm_status"    />
+        <result property="identifier"    column="identifier"    />    
+        <result property="controllerIndex"    column="controller_index"    />     
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAcsDeviceConVo">
+        select controller_id, controller_name, ip, port, type, capacity, user_name, password, status, alarm_status, identifier, controller_index, del_flag, create_by, create_time, update_by, update_time, remark from acs_device_controller
+    </sql>
+
+    <select id="selectAcsDeviceConList" parameterType="AcsDeviceCon" resultMap="AcsDeviceConResult">
+        <include refid="selectAcsDeviceConVo"/>
+        <where> 
+            del_flag = '0'  
+            <if test="controllerName != null  and controllerName != ''"> and controller_name like concat('%', #{controllerName}, '%')</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectAcsDeviceConListByZoneId" parameterType="long" resultMap="AcsDeviceConResult">
+        select adc.controller_id, adc.controller_name, adc.ip, adc.port, adc.type, adc.capacity, adc.user_name, adc.password, adc.status,
+               adc.alarm_status, adc.identifier, adc.controller_index, adc.del_flag, adc.create_by, adc.create_time, adc.update_by,
+               adc.update_time, adc.remark from acs_device_controller adc
+            left join acs_device_zone_controller adzc on adc.controller_id=adzc.controller_id
+            where adzc.zone_id=#{zoneId}
+    </select>
+    
+    <select id="selectAcsDeviceConById" parameterType="Long" resultMap="AcsDeviceConResult">
+        <include refid="selectAcsDeviceConVo"/>
+        where controller_id = #{controllerId}
+    </select>
+        
+    <insert id="insertAcsDeviceCon" parameterType="AcsDeviceCon" useGeneratedKeys="true" keyProperty="controllerId">
+        insert into acs_device_controller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="controllerName != null and controllerName != ''">controller_name,</if>
+            <if test="ip != null and ip != ''">ip,</if>
+            <if test="port != null">port,</if>
+            <if test="type != null">type,</if>
+            <if test="capacity != null">capacity,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="password != null">password,</if>
+            <if test="status != null">status,</if>
+            <if test="alarmStatus != null">alarm_status,</if>
+            <if test="identifier != null and identifier != ''">identifier,</if>
+            <if test="controllerIndex != null and controllerIndex != ''">controller_index,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="controllerName != null and controllerName != ''">#{controllerName},</if>
+            <if test="ip != null and ip != ''">#{ip},</if>
+            <if test="port != null">#{port},</if>
+            <if test="type != null">#{type},</if>
+            <if test="capacity != null">#{capacity},</if>
+            <if test="userName != null and userName != ''">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="status != null">#{status},</if>
+            <if test="alarmStatus != null">#{alarmStatus},</if>
+            <if test="identifier != null and identifier != ''">#{identifier},</if>
+            <if test="controllerIndex != null and controllerIndex != ''">#{controllerIndex},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsDeviceCon" parameterType="AcsDeviceCon">
+        update acs_device_controller
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="controllerName != null and controllerName != ''">controller_name = #{controllerName},</if>
+            <if test="ip != null and ip != ''">ip = #{ip},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="alarmStatus != null">alarm_status = #{alarmStatus},</if>
+            <if test="identifier != null and identifier != ''">identifier = #{identifier},</if>
+            <if test="controllerIndex != null and controllerIndex != ''">controller_index = #{controllerIndex},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where controller_id = #{controllerId}
+    </update>
+
+    <delete id="deleteAcsDeviceConById" parameterType="Long">
+        update acs_device_controller set del_flag = '2' where controller_id = #{controllerId}
+    </delete>
+
+    <delete id="deleteAcsDeviceConByIds" parameterType="Long">
+        update acs_device_controller set del_flag = '2' where controller_id in 
+        <foreach item="controllerId" collection="array" open="(" separator="," close=")">
+            #{controllerId}
+        </foreach>
+    </delete>
+
+    <select id="selectConListByZoneId" parameterType="Long" resultType="Long">
+		select c.controller_id
+        from acs_device_controller c
+	        left join acs_device_zone_controller zc on zc.controller_id = c.controller_id
+	        left join acs_device_zone z on z.zone_id = zc.zone_id
+	    where z.zone_id = #{zoneId} and c.del_flag = '0' and z.del_flag = '0' and z.status = '0'
+	</select>
+
+    <select id="selectConByIp" parameterType="String" resultMap="AcsDeviceConResult">
+         <include refid="selectAcsDeviceConVo"/>
+		where ip = #{ip}
+    </select>
+
+    <select id="selectAcsDeviceConListDataFilter" parameterType="AcsDeviceCon" resultMap="AcsDeviceConResult">
+        select distinct dc.controller_id, dc.controller_name, dc.ip, dc.port, dc.type, dc.capacity, dc.user_name, dc.password, dc.status, dc.alarm_status, dc.identifier, dc.controller_index, dc.del_flag, dc.create_by, dc.create_time, dc.update_by, dc.update_time, dc.remark from acs_device_controller as dc
+        LEFT JOIN acs_device_zone dz on dc.controller_id IN (SELECT controller_id FROM acs_device_zone_controller WHERE zone_id = dz.zone_id )
+        LEFT JOIN sys_dept d on dz.dept_id = d.dept_id
+        <where> 
+            dc.del_flag = '0'  
+            <if test="controllerName != null  and controllerName != ''"> and dc.controller_name like concat('%', #{controllerName}, '%')</if>
+            <if test="ip != null  and ip != ''"> and dc.ip = #{ip}</if>
+            <if test="type != null "> and dc.type = #{type}</if>
+            <if test="status != null  and status != ''"> and dc.status = #{status}</if>
+            and dz.del_flag = '0'
+            and dz.status = '0'
+        </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="checkControllerNameUnique" parameterType="String" resultType="int">
+		select count(1) from acs_device_controller where controller_name = #{controllerName} limit 1
+	</select>
+
+</mapper>

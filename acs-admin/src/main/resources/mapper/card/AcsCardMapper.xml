@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.card.mapper.AcsCardMapper">
+    
+    <resultMap type="AcsCard" id="AcsCardResult">
+        <result property="cardId"    column="card_id"    />
+        <result property="cardNumber"    column="card_number"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="status"    column="status"    />
+        <result property="idType"    column="id_type"    />
+        <result property="idNumber"    column="id_number"    />
+        <result property="sex"    column="sex"    />
+        <result property="phonenumber"    column="phonenumber"    />
+        <result property="address"    column="address"    />
+        <result property="identityId"    column="identity_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="cancellingTime"    column="cancelling_time"    />
+        <result property="cancellingBy"    column="cancelling_by"    />
+        <result property="expirationStartTime"    column="expiration_start_time"    />
+        <result property="expirationEndTime"    column="expiration_end_time"    />
+    </resultMap>
+
+    <sql id="selectAcsCardVo">
+        select card_id, card_number, user_id, user_name, dept_id, status, id_type, id_number, sex, phonenumber, address, identity_id, create_time, create_by, cancelling_time, cancelling_by, expiration_start_time, expiration_end_time from acs_card
+    </sql>
+
+    <select id="selectAcsCardList" parameterType="AcsCard" resultMap="AcsCardResult">
+        select c.card_id, c.card_number, c.user_id, c.user_name, c.dept_id, c.status, c.id_type, c.id_number, c.sex, c.phonenumber, c.address, c.identity_id, c.create_time, c.create_by, c.cancelling_time, c.cancelling_by, c.expiration_start_time, c.expiration_end_time from acs_card c
+        left join sys_dept d on c.dept_id = d.dept_id
+        <where>  
+            <if test="cardNumber != null  and cardNumber != ''"> and c.card_number = #{cardNumber}</if>
+            <if test="userId != null "> and c.user_id = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and c.user_name like concat('%', #{userName}, '%')</if>
+            <if test="status != null "> and c.status = #{status}</if>
+            <if test="idNumber != null  and idNumber != ''"> and c.id_number = #{idNumber}</if>
+            <if test="identityId != null "> and c.identity_id = #{identityId}</if>
+            <if test="deptId != null and deptId != 0">
+			    AND (c.dept_id = #{deptId} OR c.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
+		    </if>
+            <!-- 数据范围过滤 -->
+		    ${params.dataScope}
+        </where>
+       
+    </select>
+    
+    <select id="selectAcsCardById" parameterType="Long" resultMap="AcsCardResult">
+        <include refid="selectAcsCardVo"/>
+        where card_id = #{cardId}
+    </select>
+        
+    <insert id="insertAcsCard" parameterType="AcsCard" useGeneratedKeys="true" keyProperty="cardId">
+        insert into acs_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cardNumber != null and cardNumber != ''">card_number,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="status != null">status,</if>
+            <if test="idType != null">id_type,</if>
+            <if test="idNumber != null and idNumber != ''">id_number,</if>
+            <if test="sex != null and sex != ''">sex,</if>
+            <if test="phonenumber != null">phonenumber,</if>
+            <if test="address != null">address,</if>
+            <if test="identityId != null">identity_id,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="cancellingTime != null">cancelling_time,</if>
+            <if test="cancellingBy != null">cancelling_by,</if>
+            <if test="expirationStartTime != null">expiration_start_time,</if>
+            <if test="expirationEndTime != null">expiration_end_time,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cardNumber != null and cardNumber != ''">#{cardNumber},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="idType != null">#{idType},</if>
+            <if test="idNumber != null and idNumber != ''">#{idNumber},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="phonenumber != null">#{phonenumber},</if>
+            <if test="address != null">#{address},</if>
+            <if test="identityId != null">#{identityId},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="cancellingTime != null">#{cancellingTime},</if>
+            <if test="cancellingBy != null">#{cancellingBy},</if>
+            <if test="expirationStartTime != null">#{expirationStartTime},</if>
+            <if test="expirationEndTime != null">#{expirationEndTime},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateAcsCard" parameterType="AcsCard">
+ 		update acs_card
+ 		<set>
+            <if test="deptId != null">dept_id=#{deptId},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="sex != null and sex != ''">sex=#{sex},</if>
+            <if test="phonenumber != null">phonenumber=#{phonenumber},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="identityId != null">identity_id=#{identityId},</if>
+            <if test="expirationStartTime != null">expiration_start_time=#{expirationStartTime},</if>
+            <if test="expirationEndTime != null">expiration_end_time=#{expirationEndTime},</if>
+ 		</set>
+ 		where card_id = #{cardId}
+	</update>
+
+    <update id="cancelAcsCardById" parameterType="Long">
+         update acs_card set status = 2, cancelling_time = sysdate() where card_id = #{id}
+    </update>
+
+    <update id="cancelAcsCardByIds">
+         update acs_card set status = 2, cancelling_time = sysdate(), cancelling_by = #{arg1}  where card_id in 
+        <foreach  item="id" collection="arg0" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="frozenAcsCardById" parameterType="Long">
+         update acs_card set status = 1 where status = 0 and card_id = #{id}
+    </update>
+
+    <update id="frozenAcsCardByIds" parameterType="String">
+         update acs_card set status = 1 where status = 0 and card_id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="unfreezeAcsCardById" parameterType="Long">
+         update acs_card set status = '0' where status = '1' and card_id = #{id}
+    </update>
+
+    <update id="unfreezeAcsCardByIds" parameterType="String">
+         update acs_card set status = '0' where status = '1' and card_id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="selectCardByIDNumber" parameterType="String" resultMap="AcsCardResult">
+	    <include refid="selectAcsCardVo"/>
+		where id_number = #{idnumber} and status in ('0', '1', '3')
+	</select>
+
+
+     <select id="selectCardByCardNumber" parameterType="String" resultMap="AcsCardResult">
+	    <include refid="selectAcsCardVo"/>
+		where card_number = #{cardnumber} and status in ('0', '1', '3')
+	</select>
+
+</mapper>

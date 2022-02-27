@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AcsWeekTemplateMapper">
+    
+    <resultMap type="AcsWeekTemplate" id="AcsWeekTemplateResult">
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="holidayGroupId"    column="holiday_group_id"    />
+        <result property="monStartTime1"    column="mon_start_time_1"    />
+        <result property="monEndTime1"    column="mon_end_time_1"    />
+        <result property="monStartTime2"    column="mon_start_time_2"    />
+        <result property="monEndTime2"    column="mon_end_time_2"    />
+        <result property="monStartTime3"    column="mon_start_time_3"    />
+        <result property="monEndTime3"    column="mon_end_time_3"    />
+        <result property="tueStartTime1"    column="tue_start_time_1"    />
+        <result property="tueEndTime1"    column="tue_end_time_1"    />
+        <result property="tueStartTime2"    column="tue_start_time_2"    />
+        <result property="tueEndTime2"    column="tue_end_time_2"    />
+        <result property="tueStartTime3"    column="tue_start_time_3"    />
+        <result property="tueEndTime3"    column="tue_end_time_3"    />
+        <result property="wenStartTime1"    column="wen_start_time_1"    />
+        <result property="wenEndTime1"    column="wen_end_time_1"    />
+        <result property="wenStartTime2"    column="wen_start_time_2"    />
+        <result property="wenEndTime2"    column="wen_end_time_2"    />
+        <result property="wenStartTime3"    column="wen_start_time_3"    />
+        <result property="wenEndTime3"    column="wen_end_time_3"    />
+        <result property="turStartTime1"    column="tur_start_time_1"    />
+        <result property="turEndTime1"    column="tur_end_time_1"    />
+        <result property="turStartTime2"    column="tur_start_time_2"    />
+        <result property="turEndTime2"    column="tur_end_time_2"    />
+        <result property="turStartTime3"    column="tur_start_time_3"    />
+        <result property="turEndTime3"    column="tur_end_time_3"    />
+        <result property="friStartTime1"    column="fri_start_time_1"    />
+        <result property="friEndTime1"    column="fri_end_time_1"    />
+        <result property="friStartTime2"    column="fri_start_time_2"    />
+        <result property="friEndTime2"    column="fri_end_time_2"    />
+        <result property="friStartTime3"    column="fri_start_time_3"    />
+        <result property="friEndTime3"    column="fri_end_time_3"    />
+        <result property="satStartTime1"    column="sat_start_time_1"    />
+        <result property="satEndTime1"    column="sat_end_time_1"    />
+        <result property="satStartTime2"    column="sat_start_time_2"    />
+        <result property="satEndTime2"    column="sat_end_time_2"    />
+        <result property="satStartTime3"    column="sat_start_time_3"    />
+        <result property="satEndTime3"    column="sat_end_time_3"    />
+        <result property="sunStartTime1"    column="sun_start_time_1"    />
+        <result property="sunEndTime1"    column="sun_end_time_1"    />
+        <result property="sunStartTime2"    column="sun_start_time_2"    />
+        <result property="sunEndTime2"    column="sun_end_time_2"    />
+        <result property="sunStartTime3"    column="sun_start_time_3"    />
+        <result property="sunEndTime3"    column="sun_end_time_3"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remake"    column="remake"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectAcsWeekTemplateVo">
+        select template_id, template_name, holiday_group_id, mon_start_time_1, mon_end_time_1, mon_start_time_2, mon_end_time_2, mon_start_time_3, mon_end_time_3, tue_start_time_1, tue_end_time_1, tue_start_time_2, tue_end_time_2, tue_start_time_3, tue_end_time_3, wen_start_time_1, wen_end_time_1, wen_start_time_2, wen_end_time_2, wen_start_time_3, wen_end_time_3, tur_start_time_1, tur_end_time_1, tur_start_time_2, tur_end_time_2, tur_start_time_3, tur_end_time_3, fri_start_time_1, fri_end_time_1, fri_start_time_2, fri_end_time_2, fri_start_time_3, fri_end_time_3, sat_start_time_1, sat_end_time_1, sat_start_time_2, sat_end_time_2, sat_start_time_3, sat_end_time_3, sun_start_time_1, sun_end_time_1, sun_start_time_2, sun_end_time_2, sun_start_time_3, sun_end_time_3, status, del_flag, remake, create_by, create_time, update_by, update_time from acs_week_template
+    </sql>
+
+    <select id="selectAcsWeekTemplateList" parameterType="AcsWeekTemplate" resultMap="AcsWeekTemplateResult">
+        <include refid="selectAcsWeekTemplateVo"/>
+        <where>  
+            <if test="templateName != null  and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAcsWeekTemplateById" parameterType="Long" resultMap="AcsWeekTemplateResult">
+        <include refid="selectAcsWeekTemplateVo"/>
+        where template_id = #{templateId}
+    </select>
+        
+    <insert id="insertAcsWeekTemplate" parameterType="AcsWeekTemplate" useGeneratedKeys="true" keyProperty="templateId">
+        insert into acs_week_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateName != null and templateName != ''">template_name,</if>
+            <if test="holidayGroupId != null">holiday_group_id,</if>
+            <if test="monStartTime1 != null">mon_start_time_1,</if>
+            <if test="monEndTime1 != null">mon_end_time_1,</if>
+            <if test="monStartTime2 != null">mon_start_time_2,</if>
+            <if test="monEndTime2 != null">mon_end_time_2,</if>
+            <if test="monStartTime3 != null">mon_start_time_3,</if>
+            <if test="monEndTime3 != null">mon_end_time_3,</if>
+            <if test="tueStartTime1 != null">tue_start_time_1,</if>
+            <if test="tueEndTime1 != null">tue_end_time_1,</if>
+            <if test="tueStartTime2 != null">tue_start_time_2,</if>
+            <if test="tueEndTime2 != null">tue_end_time_2,</if>
+            <if test="tueStartTime3 != null">tue_start_time_3,</if>
+            <if test="tueEndTime3 != null">tue_end_time_3,</if>
+            <if test="wenStartTime1 != null">wen_start_time_1,</if>
+            <if test="wenEndTime1 != null">wen_end_time_1,</if>
+            <if test="wenStartTime2 != null">wen_start_time_2,</if>
+            <if test="wenEndTime2 != null">wen_end_time_2,</if>
+            <if test="wenStartTime3 != null">wen_start_time_3,</if>
+            <if test="wenEndTime3 != null">wen_end_time_3,</if>
+            <if test="turStartTime1 != null">tur_start_time_1,</if>
+            <if test="turEndTime1 != null">tur_end_time_1,</if>
+            <if test="turStartTime2 != null">tur_start_time_2,</if>
+            <if test="turEndTime2 != null">tur_end_time_2,</if>
+            <if test="turStartTime3 != null">tur_start_time_3,</if>
+            <if test="turEndTime3 != null">tur_end_time_3,</if>
+            <if test="friStartTime1 != null">fri_start_time_1,</if>
+            <if test="friEndTime1 != null">fri_end_time_1,</if>
+            <if test="friStartTime2 != null">fri_start_time_2,</if>
+            <if test="friEndTime2 != null">fri_end_time_2,</if>
+            <if test="friStartTime3 != null">fri_start_time_3,</if>
+            <if test="friEndTime3 != null">fri_end_time_3,</if>
+            <if test="satStartTime1 != null">sat_start_time_1,</if>
+            <if test="satEndTime1 != null">sat_end_time_1,</if>
+            <if test="satStartTime2 != null">sat_start_time_2,</if>
+            <if test="satEndTime2 != null">sat_end_time_2,</if>
+            <if test="satStartTime3 != null">sat_start_time_3,</if>
+            <if test="satEndTime3 != null">sat_end_time_3,</if>
+            <if test="sunStartTime1 != null">sun_start_time_1,</if>
+            <if test="sunEndTime1 != null">sun_end_time_1,</if>
+            <if test="sunStartTime2 != null">sun_start_time_2,</if>
+            <if test="sunEndTime2 != null">sun_end_time_2,</if>
+            <if test="sunStartTime3 != null">sun_start_time_3,</if>
+            <if test="sunEndTime3 != null">sun_end_time_3,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remake != null">remake,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateName != null and templateName != ''">#{templateName},</if>
+            <if test="holidayGroupId != null">#{holidayGroupId},</if>
+            <if test="monStartTime1 != null">#{monStartTime1},</if>
+            <if test="monEndTime1 != null">#{monEndTime1},</if>
+            <if test="monStartTime2 != null">#{monStartTime2},</if>
+            <if test="monEndTime2 != null">#{monEndTime2},</if>
+            <if test="monStartTime3 != null">#{monStartTime3},</if>
+            <if test="monEndTime3 != null">#{monEndTime3},</if>
+            <if test="tueStartTime1 != null">#{tueStartTime1},</if>
+            <if test="tueEndTime1 != null">#{tueEndTime1},</if>
+            <if test="tueStartTime2 != null">#{tueStartTime2},</if>
+            <if test="tueEndTime2 != null">#{tueEndTime2},</if>
+            <if test="tueStartTime3 != null">#{tueStartTime3},</if>
+            <if test="tueEndTime3 != null">#{tueEndTime3},</if>
+            <if test="wenStartTime1 != null">#{wenStartTime1},</if>
+            <if test="wenEndTime1 != null">#{wenEndTime1},</if>
+            <if test="wenStartTime2 != null">#{wenStartTime2},</if>
+            <if test="wenEndTime2 != null">#{wenEndTime2},</if>
+            <if test="wenStartTime3 != null">#{wenStartTime3},</if>
+            <if test="wenEndTime3 != null">#{wenEndTime3},</if>
+            <if test="turStartTime1 != null">#{turStartTime1},</if>
+            <if test="turEndTime1 != null">#{turEndTime1},</if>
+            <if test="turStartTime2 != null">#{turStartTime2},</if>
+            <if test="turEndTime2 != null">#{turEndTime2},</if>
+            <if test="turStartTime3 != null">#{turStartTime3},</if>
+            <if test="turEndTime3 != null">#{turEndTime3},</if>
+            <if test="friStartTime1 != null">#{friStartTime1},</if>
+            <if test="friEndTime1 != null">#{friEndTime1},</if>
+            <if test="friStartTime2 != null">#{friStartTime2},</if>
+            <if test="friEndTime2 != null">#{friEndTime2},</if>
+            <if test="friStartTime3 != null">#{friStartTime3},</if>
+            <if test="friEndTime3 != null">#{friEndTime3},</if>
+            <if test="satStartTime1 != null">#{satStartTime1},</if>
+            <if test="satEndTime1 != null">#{satEndTime1},</if>
+            <if test="satStartTime2 != null">#{satStartTime2},</if>
+            <if test="satEndTime2 != null">#{satEndTime2},</if>
+            <if test="satStartTime3 != null">#{satStartTime3},</if>
+            <if test="satEndTime3 != null">#{satEndTime3},</if>
+            <if test="sunStartTime1 != null">#{sunStartTime1},</if>
+            <if test="sunEndTime1 != null">#{sunEndTime1},</if>
+            <if test="sunStartTime2 != null">#{sunStartTime2},</if>
+            <if test="sunEndTime2 != null">#{sunEndTime2},</if>
+            <if test="sunStartTime3 != null">#{sunStartTime3},</if>
+            <if test="sunEndTime3 != null">#{sunEndTime3},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remake != null">#{remake},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsWeekTemplate" parameterType="AcsWeekTemplate">
+        update acs_week_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateName != null and templateName != ''">template_name = #{templateName},</if>
+            <if test="holidayGroupId != null">holiday_group_id = #{holidayGroupId},</if>
+            <if test="monStartTime1 != null">mon_start_time_1 = #{monStartTime1},</if>
+            <if test="monEndTime1 != null">mon_end_time_1 = #{monEndTime1},</if>
+            <if test="monStartTime2 != null">mon_start_time_2 = #{monStartTime2},</if>
+            <if test="monEndTime2 != null">mon_end_time_2 = #{monEndTime2},</if>
+            <if test="monStartTime3 != null">mon_start_time_3 = #{monStartTime3},</if>
+            <if test="monEndTime3 != null">mon_end_time_3 = #{monEndTime3},</if>
+            <if test="tueStartTime1 != null">tue_start_time_1 = #{tueStartTime1},</if>
+            <if test="tueEndTime1 != null">tue_end_time_1 = #{tueEndTime1},</if>
+            <if test="tueStartTime2 != null">tue_start_time_2 = #{tueStartTime2},</if>
+            <if test="tueEndTime2 != null">tue_end_time_2 = #{tueEndTime2},</if>
+            <if test="tueStartTime3 != null">tue_start_time_3 = #{tueStartTime3},</if>
+            <if test="tueEndTime3 != null">tue_end_time_3 = #{tueEndTime3},</if>
+            <if test="wenStartTime1 != null">wen_start_time_1 = #{wenStartTime1},</if>
+            <if test="wenEndTime1 != null">wen_end_time_1 = #{wenEndTime1},</if>
+            <if test="wenStartTime2 != null">wen_start_time_2 = #{wenStartTime2},</if>
+            <if test="wenEndTime2 != null">wen_end_time_2 = #{wenEndTime2},</if>
+            <if test="wenStartTime3 != null">wen_start_time_3 = #{wenStartTime3},</if>
+            <if test="wenEndTime3 != null">wen_end_time_3 = #{wenEndTime3},</if>
+            <if test="turStartTime1 != null">tur_start_time_1 = #{turStartTime1},</if>
+            <if test="turEndTime1 != null">tur_end_time_1 = #{turEndTime1},</if>
+            <if test="turStartTime2 != null">tur_start_time_2 = #{turStartTime2},</if>
+            <if test="turEndTime2 != null">tur_end_time_2 = #{turEndTime2},</if>
+            <if test="turStartTime3 != null">tur_start_time_3 = #{turStartTime3},</if>
+            <if test="turEndTime3 != null">tur_end_time_3 = #{turEndTime3},</if>
+            <if test="friStartTime1 != null">fri_start_time_1 = #{friStartTime1},</if>
+            <if test="friEndTime1 != null">fri_end_time_1 = #{friEndTime1},</if>
+            <if test="friStartTime2 != null">fri_start_time_2 = #{friStartTime2},</if>
+            <if test="friEndTime2 != null">fri_end_time_2 = #{friEndTime2},</if>
+            <if test="friStartTime3 != null">fri_start_time_3 = #{friStartTime3},</if>
+            <if test="friEndTime3 != null">fri_end_time_3 = #{friEndTime3},</if>
+            <if test="satStartTime1 != null">sat_start_time_1 = #{satStartTime1},</if>
+            <if test="satEndTime1 != null">sat_end_time_1 = #{satEndTime1},</if>
+            <if test="satStartTime2 != null">sat_start_time_2 = #{satStartTime2},</if>
+            <if test="satEndTime2 != null">sat_end_time_2 = #{satEndTime2},</if>
+            <if test="satStartTime3 != null">sat_start_time_3 = #{satStartTime3},</if>
+            <if test="satEndTime3 != null">sat_end_time_3 = #{satEndTime3},</if>
+            <if test="sunStartTime1 != null">sun_start_time_1 = #{sunStartTime1},</if>
+            <if test="sunEndTime1 != null">sun_end_time_1 = #{sunEndTime1},</if>
+            <if test="sunStartTime2 != null">sun_start_time_2 = #{sunStartTime2},</if>
+            <if test="sunEndTime2 != null">sun_end_time_2 = #{sunEndTime2},</if>
+            <if test="sunStartTime3 != null">sun_start_time_3 = #{sunStartTime3},</if>
+            <if test="sunEndTime3 != null">sun_end_time_3 = #{sunEndTime3},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remake != null">remake = #{remake},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where template_id = #{templateId}
+    </update>
+
+    <delete id="deleteAcsWeekTemplateById" parameterType="Long">
+        delete from acs_week_template where template_id = #{templateId}
+    </delete>
+
+    <delete id="deleteAcsWeekTemplateByIds" parameterType="String">
+        delete from acs_week_template where template_id in 
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </delete>
+</mapper>

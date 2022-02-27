@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.info.mapper.AcsAlarmInfoMapper">
+    
+    <resultMap type="AcsAlarmInfo" id="AcsAlarmInfoResult">
+        <result property="alarmId"    column="alarm_id"    />
+        <result property="alarmTime"    column="alarm_time"    />
+        <result property="alarmType"    column="alarm_type"    />
+        <result property="controllerId"    column="controller_id"    />
+        <result property="controllerName"    column="controller_name"    />
+        <result property="controllerIp"    column="controller_ip"    />
+        <result property="doorName"    column="door_name"    />
+        <result property="doorPin"    column="door_pin"    />
+        <result property="alarmDetail"    column="alarm_detail"    />
+        <result property="userName"    column="user_name"    />
+        <result property="cardNumber"    column="card_number"    />
+    </resultMap>
+
+    <sql id="selectAcsAlarmInfoVo">
+        select alarm_id, alarm_time, alarm_type, controller_id, controller_name, controller_ip, door_name, door_pin, alarm_detail, user_name, card_number from acs_alarm_info
+    </sql>
+
+    <select id="selectAcsAlarmInfoList" parameterType="AcsAlarmInfo" resultMap="AcsAlarmInfoResult">
+        <include refid="selectAcsAlarmInfoVo"/>
+        <where>  
+            <if test="params.beginAlarmTime != null and params.beginAlarmTime != '' and params.endAlarmTime != null and params.endAlarmTime != ''"> and alarm_time between #{params.beginAlarmTime} and #{params.endAlarmTime}</if>
+            <if test="alarmType != null  and alarmType != ''"> and alarm_type = #{alarmType}</if>
+            <if test="controllerId != null"> and controller_id = #{controllerId}</if>
+            <if test="controllerName != null  and controllerName != ''"> and controller_name like concat('%', #{controllerName}, '%')</if>
+            <if test="doorName != null  and doorName != ''"> and door_name like concat('%', #{doorName}, '%')</if>
+            <if test="alarmDetail != null  and alarmDetail != ''"> and alarm_detail like concat('%', #{alarmDetail}, '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="cardNumber != null  and cardNumber != ''"> and card_number = #{cardNumber}</if>
+        </where>
+        order by alarm_id desc
+    </select>
+
+    <select id="selectAcsAlarmInfoListByConAndDoor" resultMap="AcsAlarmInfoResult">
+        <include refid="selectAcsAlarmInfoVo"/>
+        <where>  
+            <if test="doorPin != null and doorPin != 0"> and door_pin = #{doorPin}</if>
+            and controller_id in 
+            <foreach item="controllerId" collection="list" open="(" separator="," close=")">
+                #{controllerId}
+            </foreach>
+        </where>
+        order by alarm_id desc
+    </select>
+    
+    <select id="selectAcsAlarmInfoById" parameterType="Long" resultMap="AcsAlarmInfoResult">
+        <include refid="selectAcsAlarmInfoVo"/>
+        where alarm_id = #{alarmId}
+    </select>
+        
+    <insert id="insertAcsAlarmInfo" parameterType="AcsAlarmInfo" useGeneratedKeys="true" keyProperty="alarmId">
+        insert into acs_alarm_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="alarmTime != null">alarm_time,</if>
+            <if test="alarmType != null and alarmType != ''">alarm_type,</if>
+            <if test="controllerId != null">controller_id,</if>
+            <if test="controllerName != null and controllerName != ''">controller_name,</if>
+            <if test="controllerIp != null and controllerIp != ''">controller_ip,</if>
+            <if test="doorName != null">door_name,</if>
+            <if test="doorPin != null">door_pin,</if>
+            <if test="alarmDetail != null and alarmDetail != ''">alarm_detail,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="cardNumber != null">card_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="alarmTime != null">#{alarmTime},</if>
+            <if test="alarmType != null and alarmType != ''">#{alarmType},</if>
+            <if test="controllerId != null">#{controllerId},</if>
+            <if test="controllerName != null and controllerName != ''">#{controllerName},</if>
+            <if test="controllerIp != null and controllerIp != ''">#{controllerIp},</if>
+            <if test="doorName != null">#{doorName},</if>
+            <if test="doorPin != null">#{doorPin},</if>
+            <if test="alarmDetail != null and alarmDetail != ''">#{alarmDetail},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="cardNumber != null">#{cardNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsAlarmInfo" parameterType="AcsAlarmInfo">
+        update acs_alarm_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="alarmTime != null">alarm_time = #{alarmTime},</if>
+            <if test="alarmType != null and alarmType != ''">alarm_type = #{alarmType},</if>
+            <if test="controllerId != null">controller_id = #{controllerId},</if>
+            <if test="controllerName != null and controllerName != ''">controller_name = #{controllerName},</if>
+            <if test="controllerIp != null and controllerIp != ''">controller_ip = #{controllerIp},</if>
+            <if test="doorName != null">door_name = #{doorName},</if>
+            <if test="doorPin != null">door_pin = #{doorPin},</if>
+            <if test="alarmDetail != null and alarmDetail != ''">alarm_detail = #{alarmDetail},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="cardNumber != null">card_number = #{cardNumber},</if>
+        </trim>
+        where alarm_id = #{alarmId}
+    </update>
+
+    <delete id="deleteAcsAlarmInfoById" parameterType="Long">
+        delete from acs_alarm_info where alarm_id = #{alarmId}
+    </delete>
+
+    <delete id="deleteAcsAlarmInfoByIds" parameterType="String">
+        delete from acs_alarm_info where alarm_id in 
+        <foreach item="alarmId" collection="array" open="(" separator="," close=")">
+            #{alarmId}
+        </foreach>
+    </delete>
+
+</mapper>

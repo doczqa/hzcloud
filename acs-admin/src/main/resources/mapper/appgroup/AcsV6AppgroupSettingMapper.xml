@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6AppgroupSettingMapper">
+    
+    <resultMap type="AcsV6AppgroupSetting" id="AcsV6AppgroupSettingResult">
+        <result property="id"    column="id"    />
+        <result property="door"    column="door"    />
+        <result property="doorDetail"    column="door_detail"    />
+        <result property="doorOut"    column="door_out"    />
+        <result property="secPinTz1"    column="sec_pin_tz_1"    />
+        <result property="secPinTz2"    column="sec_pin_tz_2"    />
+        <result property="secPinTz3"    column="sec_pin_tz_3"    />
+        <result property="secPinTz4"    column="sec_pin_tz_4"    />
+        <result property="perPinTz1"    column="per_pin_tz_1"    />
+        <result property="perPinTz2"    column="per_pin_tz_2"    />
+        <result property="perPinTz3"    column="per_pin_tz_3"    />
+        <result property="perPinTz4"    column="per_pin_tz_4"    />
+    </resultMap>
+
+    <sql id="selectAcsV6AppgroupSettingVo">
+        select id, door, door_detail, door_out, sec_pin_tz_1, sec_pin_tz_2, sec_pin_tz_3, sec_pin_tz_4, per_pin_tz_1, per_pin_tz_2, per_pin_tz_3, per_pin_tz_4 from acs_v6_appgroup_setting
+    </sql>
+
+    <select id="selectAcsV6AppgroupSettingList" parameterType="AcsV6AppgroupSetting" resultMap="AcsV6AppgroupSettingResult">
+        <include refid="selectAcsV6AppgroupSettingVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAcsV6AppgroupSettingById" parameterType="String" resultMap="AcsV6AppgroupSettingResult">
+        <include refid="selectAcsV6AppgroupSettingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAcsV6AppgroupSetting" parameterType="AcsV6AppgroupSetting">
+        insert into acs_v6_appgroup_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="door != null">door,</if>
+            <if test="doorDetail != null">door_detail,</if>
+            <if test="doorOut != null">door_out,</if>
+            <if test="secPinTz1 != null">sec_pin_tz_1,</if>
+            <if test="secPinTz2 != null">sec_pin_tz_2,</if>
+            <if test="secPinTz3 != null">sec_pin_tz_3,</if>
+            <if test="secPinTz4 != null">sec_pin_tz_4,</if>
+            <if test="perPinTz1 != null">per_pin_tz_1,</if>
+            <if test="perPinTz2 != null">per_pin_tz_2,</if>
+            <if test="perPinTz3 != null">per_pin_tz_3,</if>
+            <if test="perPinTz4 != null">per_pin_tz_4,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="door != null">#{door},</if>
+            <if test="doorDetail != null">#{doorDetail},</if>
+            <if test="doorOut != null">#{doorOut},</if>
+            <if test="secPinTz1 != null">#{secPinTz1},</if>
+            <if test="secPinTz2 != null">#{secPinTz2},</if>
+            <if test="secPinTz3 != null">#{secPinTz3},</if>
+            <if test="secPinTz4 != null">#{secPinTz4},</if>
+            <if test="perPinTz1 != null">#{perPinTz1},</if>
+            <if test="perPinTz2 != null">#{perPinTz2},</if>
+            <if test="perPinTz3 != null">#{perPinTz3},</if>
+            <if test="perPinTz4 != null">#{perPinTz4},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6AppgroupSetting" parameterType="AcsV6AppgroupSetting">
+        update acs_v6_appgroup_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="door != null">door = #{door},</if>
+            <if test="doorDetail != null">door_detail = #{doorDetail},</if>
+            <if test="doorOut != null">door_out = #{doorOut},</if>
+            <if test="secPinTz1 != null">sec_pin_tz_1 = #{secPinTz1},</if>
+            <if test="secPinTz2 != null">sec_pin_tz_2 = #{secPinTz2},</if>
+            <if test="secPinTz3 != null">sec_pin_tz_3 = #{secPinTz3},</if>
+            <if test="secPinTz4 != null">sec_pin_tz_4 = #{secPinTz4},</if>
+            <if test="perPinTz1 != null">per_pin_tz_1 = #{perPinTz1},</if>
+            <if test="perPinTz2 != null">per_pin_tz_2 = #{perPinTz2},</if>
+            <if test="perPinTz3 != null">per_pin_tz_3 = #{perPinTz3},</if>
+            <if test="perPinTz4 != null">per_pin_tz_4 = #{perPinTz4},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAcsV6AppgroupSettingById" parameterType="String">
+        delete from acs_v6_appgroup_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteAcsV6AppgroupSettingByIds" parameterType="String">
+        delete from acs_v6_appgroup_setting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

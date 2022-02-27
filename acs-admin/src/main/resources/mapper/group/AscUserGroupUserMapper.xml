@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AscUserGroupUserMapper">
+    
+    <resultMap type="AscUserGroupUser" id="AscUserGroupUserResult">
+        <result property="userGroupId"    column="user_group_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectAscUserGroupUserVo">
+        select user_group_id, user_id from asc_user_group_user
+    </sql>
+
+    <select id="selectAscUserGroupUserList" parameterType="AscUserGroupUser" resultMap="AscUserGroupUserResult">
+        <include refid="selectAscUserGroupUserVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAscUserGroupUserById" parameterType="Long" resultMap="AscUserGroupUserResult">
+        <include refid="selectAscUserGroupUserVo"/>
+        where user_group_id = #{userGroupId}
+    </select>
+        
+    <insert id="insertAscUserGroupUser" parameterType="AscUserGroupUser">
+        insert into asc_user_group_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userGroupId != null">user_group_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userGroupId != null">#{userGroupId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAscUserGroupUser" parameterType="AscUserGroupUser">
+        update asc_user_group_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where user_group_id = #{userGroupId}
+    </update>
+
+    <delete id="deleteAscUserGroupUserById" parameterType="Long">
+        delete from asc_user_group_user where user_group_id = #{userGroupId}
+    </delete>
+
+    <delete id="deleteAscUserGroupUserByIds" parameterType="String">
+        delete from asc_user_group_user where user_group_id in 
+        <foreach item="userGroupId" collection="array" open="(" separator="," close=")">
+            #{userGroupId}
+        </foreach>
+    </delete>
+</mapper>

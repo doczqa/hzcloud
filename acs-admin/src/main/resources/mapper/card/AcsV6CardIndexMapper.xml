@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6CardIndexMapper">
+    
+    <resultMap type="AcsV6CardIndex" id="AcsV6CardIndexResult">
+        <result property="controllerId"    column="controller_id"    />
+        <result property="cardId"    column="card_id"    />
+        <result property="cardIndex"    column="card_index"    />
+    </resultMap>
+
+    <sql id="selectAcsV6CardIndexVo">
+        select controller_id, card_id, card_index from acs_v6_card_index
+    </sql>
+
+    <select id="selectAcsV6CardIndexList" parameterType="AcsV6CardIndex" resultMap="AcsV6CardIndexResult">
+        <include refid="selectAcsV6CardIndexVo"/>
+        <where> 
+            <if test="controllerId != null"> and controller_id = #{controllerId}</if>
+            <if test="cardId != null "> and card_id = #{cardId}</if>
+            <if test="cardIndex != null  and cardIndex != ''"> and card_index = #{cardIndex}</if>
+        </where>
+    </select>
+    
+    <select id="selectAcsV6CardIndexById" parameterType="Long" resultMap="AcsV6CardIndexResult">
+        <include refid="selectAcsV6CardIndexVo"/>
+        where controller_id = #{controllerId}
+    </select>
+        
+    <insert id="insertAcsV6CardIndex" parameterType="AcsV6CardIndex">
+        insert into acs_v6_card_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="controllerId != null">controller_id,</if>
+            <if test="cardId != null">card_id,</if>
+            <if test="cardIndex != null">card_index,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="controllerId != null">#{controllerId},</if>
+            <if test="cardId != null">#{cardId},</if>
+            <if test="cardIndex != null">#{cardIndex},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6CardIndex" parameterType="AcsV6CardIndex">
+        update acs_v6_card_index
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cardId != null">card_id = #{cardId},</if>
+            <if test="cardIndex != null">card_index = #{cardIndex},</if>
+        </trim>
+        where controller_id = #{controllerId}
+    </update>
+
+    <delete id="deleteAcsV6CardIndexById" parameterType="Long">
+        delete from acs_v6_card_index where controller_id = #{controllerId}
+    </delete>
+
+    <delete id="deleteAcsV6CardIndexByIds" parameterType="String">
+        delete from acs_v6_card_index where controller_id in 
+        <foreach item="controllerId" collection="array" open="(" separator="," close=")">
+            #{controllerId}
+        </foreach>
+    </delete>
+    
+    <insert id="batchinsertAcsV6CardIndex">
+        insert into acs_v6_card_index (controller_id, card_id, card_index)
+        values
+        <foreach collection="list" item="item" index="index"  separator=",">
+            (#{item.controllerId}, #{item.cardId}, #{item.cardIndex})
+        </foreach>
+    </insert>
+</mapper>

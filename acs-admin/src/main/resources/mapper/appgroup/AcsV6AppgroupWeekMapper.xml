@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6AppgroupWeekMapper">
+    
+    <resultMap type="AcsV6AppgroupWeek" id="AcsV6AppgroupWeekResult">
+        <result property="id"    column="id"    />
+        <result property="sunTz"    column="sun_tz"    />
+        <result property="sunTzOut"    column="sun_tz_out"    />
+        <result property="monTz"    column="mon_tz"    />
+        <result property="monTzOut"    column="mon_tz_out"    />
+        <result property="tueTz"    column="tue_tz"    />
+        <result property="tueTzOut"    column="tue_tz_out"    />
+        <result property="wedTz"    column="wed_tz"    />
+        <result property="wedTzOut"    column="wed_tz_out"    />
+        <result property="thuTz"    column="thu_tz"    />
+        <result property="thuTzOut"    column="thu_tz_out"    />
+        <result property="friTz"    column="fri_tz"    />
+        <result property="friTzOut"    column="fri_tz_out"    />
+        <result property="satTz"    column="sat_tz"    />
+        <result property="satTzOut"    column="sat_tz_out"    />
+    </resultMap>
+
+    <sql id="selectAcsV6AppgroupWeekVo">
+        select id, sun_tz, sun_tz_out, mon_tz, mon_tz_out, tue_tz, tue_tz_out, wed_tz, wed_tz_out, thu_tz, thu_tz_out, fri_tz, fri_tz_out, sat_tz, sat_tz_out from acs_v6_appgroup_week
+    </sql>
+
+    <select id="selectAcsV6AppgroupWeekList" parameterType="AcsV6AppgroupWeek" resultMap="AcsV6AppgroupWeekResult">
+        <include refid="selectAcsV6AppgroupWeekVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAcsV6AppgroupWeekById" parameterType="String" resultMap="AcsV6AppgroupWeekResult">
+        <include refid="selectAcsV6AppgroupWeekVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAcsV6AppgroupWeek" parameterType="AcsV6AppgroupWeek">
+        insert into acs_v6_appgroup_week
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="sunTz != null">sun_tz,</if>
+            <if test="sunTzOut != null">sun_tz_out,</if>
+            <if test="monTz != null">mon_tz,</if>
+            <if test="monTzOut != null">mon_tz_out,</if>
+            <if test="tueTz != null">tue_tz,</if>
+            <if test="tueTzOut != null">tue_tz_out,</if>
+            <if test="wedTz != null">wed_tz,</if>
+            <if test="wedTzOut != null">wed_tz_out,</if>
+            <if test="thuTz != null">thu_tz,</if>
+            <if test="thuTzOut != null">thu_tz_out,</if>
+            <if test="friTz != null">fri_tz,</if>
+            <if test="friTzOut != null">fri_tz_out,</if>
+            <if test="satTz != null">sat_tz,</if>
+            <if test="satTzOut != null">sat_tz_out,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="sunTz != null">#{sunTz},</if>
+            <if test="sunTzOut != null">#{sunTzOut},</if>
+            <if test="monTz != null">#{monTz},</if>
+            <if test="monTzOut != null">#{monTzOut},</if>
+            <if test="tueTz != null">#{tueTz},</if>
+            <if test="tueTzOut != null">#{tueTzOut},</if>
+            <if test="wedTz != null">#{wedTz},</if>
+            <if test="wedTzOut != null">#{wedTzOut},</if>
+            <if test="thuTz != null">#{thuTz},</if>
+            <if test="thuTzOut != null">#{thuTzOut},</if>
+            <if test="friTz != null">#{friTz},</if>
+            <if test="friTzOut != null">#{friTzOut},</if>
+            <if test="satTz != null">#{satTz},</if>
+            <if test="satTzOut != null">#{satTzOut},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6AppgroupWeek" parameterType="AcsV6AppgroupWeek">
+        update acs_v6_appgroup_week
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sunTz != null">sun_tz = #{sunTz},</if>
+            <if test="sunTzOut != null">sun_tz_out = #{sunTzOut},</if>
+            <if test="monTz != null">mon_tz = #{monTz},</if>
+            <if test="monTzOut != null">mon_tz_out = #{monTzOut},</if>
+            <if test="tueTz != null">tue_tz = #{tueTz},</if>
+            <if test="tueTzOut != null">tue_tz_out = #{tueTzOut},</if>
+            <if test="wedTz != null">wed_tz = #{wedTz},</if>
+            <if test="wedTzOut != null">wed_tz_out = #{wedTzOut},</if>
+            <if test="thuTz != null">thu_tz = #{thuTz},</if>
+            <if test="thuTzOut != null">thu_tz_out = #{thuTzOut},</if>
+            <if test="friTz != null">fri_tz = #{friTz},</if>
+            <if test="friTzOut != null">fri_tz_out = #{friTzOut},</if>
+            <if test="satTz != null">sat_tz = #{satTz},</if>
+            <if test="satTzOut != null">sat_tz_out = #{satTzOut},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAcsV6AppgroupWeekById" parameterType="String">
+        delete from acs_v6_appgroup_week where id = #{id}
+    </delete>
+
+    <delete id="deleteAcsV6AppgroupWeekByIds" parameterType="String">
+        delete from acs_v6_appgroup_week where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

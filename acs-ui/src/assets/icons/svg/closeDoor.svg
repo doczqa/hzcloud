@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>门关闭</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="door-open-solid备份">
+            <rect id="矩形" fill="#000000" fill-rule="nonzero" opacity="0" x="0" y="0" width="16" height="16"></rect>
+            <circle id="椭圆形" fill="#3ED56C" cx="14.5" cy="1.5" r="1.5"></circle>
+            <g id="door-closed-solid" transform="translate(4.000000, 2.000000)" fill="#000000" fill-opacity="0.65" fill-rule="nonzero">
+                <path d="M0,0 L0,12 L8,12 L8,0 L0,0 Z M1,1.09090909 L7,1.09090909 L7,10.9090909 L1,10.9090909 L1,1.09090909 Z M6,5.45454545 C5.725,5.45454545 5.5,5.7 5.5,6 C5.5,6.3 5.725,6.54545455 6,6.54545455 C6.275,6.54545455 6.5,6.3 6.5,6 C6.5,5.7 6.275,5.45454545 6,5.45454545 Z" id="形状"></path>
+            </g>
+        </g>
+    </g>
+</svg>

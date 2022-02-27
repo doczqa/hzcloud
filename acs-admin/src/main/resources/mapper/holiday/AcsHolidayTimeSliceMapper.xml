@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AcsHolidayTimeSliceMapper">
+    
+    <resultMap type="AcsHolidayTimeSlice" id="AcsHolidayTimeSliceResult">
+        <result property="id"    column="id"    />
+        <result property="startTime1"    column="start_time_1"    />
+        <result property="endTime1"    column="end_time_1"    />
+        <result property="startTime2"    column="start_time_2"    />
+        <result property="endTime2"    column="end_time_2"    />
+        <result property="startTime3"    column="start_time_3"    />
+        <result property="endTime3"    column="end_time_3"    />
+    </resultMap>
+
+    <sql id="selectAcsHolidayTimeSliceVo">
+        select id, start_time_1, end_time_1, start_time_2, end_time_2, start_time_3, end_time_3 from acs_holiday_time_slice
+    </sql>
+        
+    <insert id="insertAcsHolidayTimeSlice" parameterType="AcsHolidayTimeSlice">
+        insert into acs_holiday_time_slice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="startTime1 != null">start_time_1,</if>
+            <if test="endTime1 != null">end_time_1,</if>
+            <if test="startTime2 != null">start_time_2,</if>
+            <if test="endTime2 != null">end_time_2,</if>
+            <if test="startTime3 != null">start_time_3,</if>
+            <if test="endTime3 != null">end_time_3,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="startTime1 != null">#{startTime1},</if>
+            <if test="endTime1 != null">#{endTime1},</if>
+            <if test="startTime2 != null">#{startTime2},</if>
+            <if test="endTime2 != null">#{endTime2},</if>
+            <if test="startTime3 != null">#{startTime3},</if>
+            <if test="endTime3 != null">#{endTime3},</if>
+         </trim>
+         on duplicate key update
+         <trim>
+            <if test="id != null">id = #{id},</if>
+            <if test="endTime1 != null">end_time_1 = #{endTime1},</if>
+            <if test="startTime2 != null">start_time_2 = #{startTime2},</if>
+            <if test="endTime2 != null">end_time_2 = #{endTime2},</if>
+            <if test="startTime3 != null">start_time_3 = #{startTime3},</if>
+            <if test="endTime3 != null">end_time_3 = #{endTime3},</if>
+        </trim>
+    </insert>
+
+    <select id="selectAcsHolidayTimeSlice" resultMap="AcsHolidayTimeSliceResult">
+        <include refid="selectAcsHolidayTimeSliceVo"/> where id = 1
+    </select>
+
+</mapper>

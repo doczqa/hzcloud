@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AscDoorGroupDoorMapper">
+    
+    <resultMap type="AscDoorGroupDoor" id="AscDoorGroupDoorResult">
+        <result property="doorGroupId"    column="door_group_id"    />
+        <result property="doorId"    column="door_id"    />
+        <result property="controllerId"    column="controller_id"    />
+    </resultMap>
+
+    <sql id="selectAscDoorGroupDoorVo">
+        select a1.door_group_id, a1.door_id, a2.controller_id from asc_door_group_door a1 left join acs_device_door a2 on a1.door_id = a2.door_id
+    </sql>
+
+    <select id="selectAscDoorGroupDoorList" parameterType="AscDoorGroupDoor" resultMap="AscDoorGroupDoorResult">
+        <include refid="selectAscDoorGroupDoorVo"/>
+        <where>
+            <if test="doorGroupId != null">and a1.door_group_id=#{doorGroupId}</if>
+            <if test="doorId != null">and a1.door_id=#{doorId}</if>
+        </where>
+    </select>
+    
+    <select id="selectAscDoorGroupDoorById" parameterType="Long" resultMap="AscDoorGroupDoorResult">
+        <include refid="selectAscDoorGroupDoorVo"/>
+        where a1.door_group_id = #{doorGroupId}
+    </select>
+        
+    <insert id="insertAscDoorGroupDoor" parameterType="AscDoorGroupDoor">
+        insert into asc_door_group_door
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="doorGroupId != null">door_group_id,</if>
+            <if test="doorId != null">door_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="doorGroupId != null">#{doorGroupId},</if>
+            <if test="doorId != null">#{doorId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAscDoorGroupDoor" parameterType="AscDoorGroupDoor">
+        update asc_door_group_door
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="doorId != null">door_id = #{doorId},</if>
+        </trim>
+        where door_group_id = #{doorGroupId}
+    </update>
+
+    <delete id="deleteAscDoorGroupDoorById" parameterType="Long">
+        delete from asc_door_group_door where door_group_id = #{doorGroupId}
+    </delete>
+
+    <delete id="deleteAscDoorGroupDoorByIds" parameterType="String">
+        delete from asc_door_group_door where door_group_id in 
+        <foreach item="doorGroupId" collection="array" open="(" separator="," close=")">
+            #{doorGroupId}
+        </foreach>
+    </delete>
+</mapper>

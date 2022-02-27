@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6AppgroupHolidayMapper">
+    
+    <resultMap type="AcsV6AppgroupHoliday" id="AcsV6AppgroupHolidayResult">
+        <result property="id"    column="id"    />
+        <result property="preHolidayTz1"    column="pre_holiday_tz_1"    />
+        <result property="preHolidayTz1Out"    column="pre_holiday_tz_1_out"    />
+        <result property="preHolidayTz2"    column="pre_holiday_tz_2"    />
+        <result property="preHolidayTz2Out"    column="pre_holiday_tz_2_out"    />
+        <result property="preHolidayTz3"    column="pre_holiday_tz_3"    />
+        <result property="preHolidayTz3Out"    column="pre_holiday_tz_3_out"    />
+        <result property="preHolidayTz4"    column="pre_holiday_tz_4"    />
+        <result property="preHolidayTz4Out"    column="pre_holiday_tz_4_out"    />
+        <result property="preHolidayTz5"    column="pre_holiday_tz_5"    />
+        <result property="preHolidayTz5Out"    column="pre_holiday_tz_5_out"    />
+        <result property="preHolidayTz6"    column="pre_holiday_tz_6"    />
+        <result property="preHolidayTz6Out"    column="pre_holiday_tz_6_out"    />
+        <result property="preHolidayTz7"    column="pre_holiday_tz_7"    />
+        <result property="preHolidayTz7Out"    column="pre_holiday_tz_7_out"    />
+        <result property="preHolidayTz8"    column="pre_holiday_tz_8"    />
+        <result property="preHolidayTz8Out"    column="pre_holiday_tz_8_out"    />
+        <result property="holidayTz1"    column="holiday_tz_1"    />
+        <result property="holidayTz1Out"    column="holiday_tz_1_out"    />
+        <result property="holidayTz2"    column="holiday_tz_2"    />
+        <result property="holidayTz2Out"    column="holiday_tz_2_out"    />
+        <result property="holidayTz3"    column="holiday_tz_3"    />
+        <result property="holidayTz3Out"    column="holiday_tz_3_out"    />
+        <result property="holidayTz4"    column="holiday_tz_4"    />
+        <result property="holidayTz4Out"    column="holiday_tz_4_out"    />
+        <result property="holidayTz5"    column="holiday_tz_5"    />
+        <result property="holidayTz5Out"    column="holiday_tz_5_out"    />
+        <result property="holidayTz6"    column="holiday_tz_6"    />
+        <result property="holidayTz6Out"    column="holiday_tz_6_out"    />
+        <result property="holidayTz7"    column="holiday_tz_7"    />
+        <result property="holidayTz7Out"    column="holiday_tz_7_out"    />
+        <result property="holidayTz8"    column="holiday_tz_8"    />
+        <result property="holidayTz8Out"    column="holiday_tz_8_out"    />
+        <result property="postHolidayTz1"    column="post_holiday_tz_1"    />
+        <result property="postHolidayTz1Out"    column="post_holiday_tz_1_out"    />
+        <result property="postHolidayTz2"    column="post_holiday_tz_2"    />
+        <result property="postHolidayTz2Out"    column="post_holiday_tz_2_out"    />
+        <result property="postHolidayTz3"    column="post_holiday_tz_3"    />
+        <result property="postHolidayTz3Out"    column="post_holiday_tz_3_out"    />
+        <result property="postHolidayTz4"    column="post_holiday_tz_4"    />
+        <result property="postHolidayTz4Out"    column="post_holiday_tz_4_out"    />
+        <result property="postHolidayTz5"    column="post_holiday_tz_5"    />
+        <result property="postHolidayTz5Out"    column="post_holiday_tz_5_out"    />
+        <result property="postHolidayTz6"    column="post_holiday_tz_6"    />
+        <result property="postHolidayTz6Out"    column="post_holiday_tz_6_out"    />
+        <result property="postHolidayTz7"    column="post_holiday_tz_7"    />
+        <result property="postHolidayTz7Out"    column="post_holiday_tz_7_out"    />
+        <result property="postHolidayTz8"    column="post_holiday_tz_8"    />
+        <result property="postHolidayTz8Out"    column="post_holiday_tz_8_out"    />
+    </resultMap>
+
+    <sql id="selectAcsV6AppgroupHolidayVo">
+        select id, pre_holiday_tz_1, pre_holiday_tz_1_out, pre_holiday_tz_2, pre_holiday_tz_2_out, pre_holiday_tz_3, pre_holiday_tz_3_out, pre_holiday_tz_4, pre_holiday_tz_4_out, pre_holiday_tz_5, pre_holiday_tz_5_out, pre_holiday_tz_6, pre_holiday_tz_6_out, pre_holiday_tz_7, pre_holiday_tz_7_out, pre_holiday_tz_8, pre_holiday_tz_8_out, holiday_tz_1, holiday_tz_1_out, holiday_tz_2, holiday_tz_2_out, holiday_tz_3, holiday_tz_3_out, holiday_tz_4, holiday_tz_4_out, holiday_tz_5, holiday_tz_5_out, holiday_tz_6, holiday_tz_6_out, holiday_tz_7, holiday_tz_7_out, holiday_tz_8, holiday_tz_8_out, post_holiday_tz_1, post_holiday_tz_1_out, post_holiday_tz_2, post_holiday_tz_2_out, post_holiday_tz_3, post_holiday_tz_3_out, post_holiday_tz_4, post_holiday_tz_4_out, post_holiday_tz_5, post_holiday_tz_5_out, post_holiday_tz_6, post_holiday_tz_6_out, post_holiday_tz_7, post_holiday_tz_7_out, post_holiday_tz_8, post_holiday_tz_8_out from acs_v6_appgroup_holiday
+    </sql>
+
+    <select id="selectAcsV6AppgroupHolidayList" parameterType="AcsV6AppgroupHoliday" resultMap="AcsV6AppgroupHolidayResult">
+        <include refid="selectAcsV6AppgroupHolidayVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAcsV6AppgroupHolidayById" parameterType="String" resultMap="AcsV6AppgroupHolidayResult">
+        <include refid="selectAcsV6AppgroupHolidayVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAcsV6AppgroupHoliday" parameterType="AcsV6AppgroupHoliday">
+        insert into acs_v6_appgroup_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="preHolidayTz1 != null">pre_holiday_tz_1,</if>
+            <if test="preHolidayTz1Out != null">pre_holiday_tz_1_out,</if>
+            <if test="preHolidayTz2 != null">pre_holiday_tz_2,</if>
+            <if test="preHolidayTz2Out != null">pre_holiday_tz_2_out,</if>
+            <if test="preHolidayTz3 != null">pre_holiday_tz_3,</if>
+            <if test="preHolidayTz3Out != null">pre_holiday_tz_3_out,</if>
+            <if test="preHolidayTz4 != null">pre_holiday_tz_4,</if>
+            <if test="preHolidayTz4Out != null">pre_holiday_tz_4_out,</if>
+            <if test="preHolidayTz5 != null">pre_holiday_tz_5,</if>
+            <if test="preHolidayTz5Out != null">pre_holiday_tz_5_out,</if>
+            <if test="preHolidayTz6 != null">pre_holiday_tz_6,</if>
+            <if test="preHolidayTz6Out != null">pre_holiday_tz_6_out,</if>
+            <if test="preHolidayTz7 != null">pre_holiday_tz_7,</if>
+            <if test="preHolidayTz7Out != null">pre_holiday_tz_7_out,</if>
+            <if test="preHolidayTz8 != null">pre_holiday_tz_8,</if>
+            <if test="preHolidayTz8Out != null">pre_holiday_tz_8_out,</if>
+            <if test="holidayTz1 != null">holiday_tz_1,</if>
+            <if test="holidayTz1Out != null">holiday_tz_1_out,</if>
+            <if test="holidayTz2 != null">holiday_tz_2,</if>
+            <if test="holidayTz2Out != null">holiday_tz_2_out,</if>
+            <if test="holidayTz3 != null">holiday_tz_3,</if>
+            <if test="holidayTz3Out != null">holiday_tz_3_out,</if>
+            <if test="holidayTz4 != null">holiday_tz_4,</if>
+            <if test="holidayTz4Out != null">holiday_tz_4_out,</if>
+            <if test="holidayTz5 != null">holiday_tz_5,</if>
+            <if test="holidayTz5Out != null">holiday_tz_5_out,</if>
+            <if test="holidayTz6 != null">holiday_tz_6,</if>
+            <if test="holidayTz6Out != null">holiday_tz_6_out,</if>
+            <if test="holidayTz7 != null">holiday_tz_7,</if>
+            <if test="holidayTz7Out != null">holiday_tz_7_out,</if>
+            <if test="holidayTz8 != null">holiday_tz_8,</if>
+            <if test="holidayTz8Out != null">holiday_tz_8_out,</if>
+            <if test="postHolidayTz1 != null">post_holiday_tz_1,</if>
+            <if test="postHolidayTz1Out != null">post_holiday_tz_1_out,</if>
+            <if test="postHolidayTz2 != null">post_holiday_tz_2,</if>
+            <if test="postHolidayTz2Out != null">post_holiday_tz_2_out,</if>
+            <if test="postHolidayTz3 != null">post_holiday_tz_3,</if>
+            <if test="postHolidayTz3Out != null">post_holiday_tz_3_out,</if>
+            <if test="postHolidayTz4 != null">post_holiday_tz_4,</if>
+            <if test="postHolidayTz4Out != null">post_holiday_tz_4_out,</if>
+            <if test="postHolidayTz5 != null">post_holiday_tz_5,</if>
+            <if test="postHolidayTz5Out != null">post_holiday_tz_5_out,</if>
+            <if test="postHolidayTz6 != null">post_holiday_tz_6,</if>
+            <if test="postHolidayTz6Out != null">post_holiday_tz_6_out,</if>
+            <if test="postHolidayTz7 != null">post_holiday_tz_7,</if>
+            <if test="postHolidayTz7Out != null">post_holiday_tz_7_out,</if>
+            <if test="postHolidayTz8 != null">post_holiday_tz_8,</if>
+            <if test="postHolidayTz8Out != null">post_holiday_tz_8_out,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="preHolidayTz1 != null">#{preHolidayTz1},</if>
+            <if test="preHolidayTz1Out != null">#{preHolidayTz1Out},</if>
+            <if test="preHolidayTz2 != null">#{preHolidayTz2},</if>
+            <if test="preHolidayTz2Out != null">#{preHolidayTz2Out},</if>
+            <if test="preHolidayTz3 != null">#{preHolidayTz3},</if>
+            <if test="preHolidayTz3Out != null">#{preHolidayTz3Out},</if>
+            <if test="preHolidayTz4 != null">#{preHolidayTz4},</if>
+            <if test="preHolidayTz4Out != null">#{preHolidayTz4Out},</if>
+            <if test="preHolidayTz5 != null">#{preHolidayTz5},</if>
+            <if test="preHolidayTz5Out != null">#{preHolidayTz5Out},</if>
+            <if test="preHolidayTz6 != null">#{preHolidayTz6},</if>
+            <if test="preHolidayTz6Out != null">#{preHolidayTz6Out},</if>
+            <if test="preHolidayTz7 != null">#{preHolidayTz7},</if>
+            <if test="preHolidayTz7Out != null">#{preHolidayTz7Out},</if>
+            <if test="preHolidayTz8 != null">#{preHolidayTz8},</if>
+            <if test="preHolidayTz8Out != null">#{preHolidayTz8Out},</if>
+            <if test="holidayTz1 != null">#{holidayTz1},</if>
+            <if test="holidayTz1Out != null">#{holidayTz1Out},</if>
+            <if test="holidayTz2 != null">#{holidayTz2},</if>
+            <if test="holidayTz2Out != null">#{holidayTz2Out},</if>
+            <if test="holidayTz3 != null">#{holidayTz3},</if>
+            <if test="holidayTz3Out != null">#{holidayTz3Out},</if>
+            <if test="holidayTz4 != null">#{holidayTz4},</if>
+            <if test="holidayTz4Out != null">#{holidayTz4Out},</if>
+            <if test="holidayTz5 != null">#{holidayTz5},</if>
+            <if test="holidayTz5Out != null">#{holidayTz5Out},</if>
+            <if test="holidayTz6 != null">#{holidayTz6},</if>
+            <if test="holidayTz6Out != null">#{holidayTz6Out},</if>
+            <if test="holidayTz7 != null">#{holidayTz7},</if>
+            <if test="holidayTz7Out != null">#{holidayTz7Out},</if>
+            <if test="holidayTz8 != null">#{holidayTz8},</if>
+            <if test="holidayTz8Out != null">#{holidayTz8Out},</if>
+            <if test="postHolidayTz1 != null">#{postHolidayTz1},</if>
+            <if test="postHolidayTz1Out != null">#{postHolidayTz1Out},</if>
+            <if test="postHolidayTz2 != null">#{postHolidayTz2},</if>
+            <if test="postHolidayTz2Out != null">#{postHolidayTz2Out},</if>
+            <if test="postHolidayTz3 != null">#{postHolidayTz3},</if>
+            <if test="postHolidayTz3Out != null">#{postHolidayTz3Out},</if>
+            <if test="postHolidayTz4 != null">#{postHolidayTz4},</if>
+            <if test="postHolidayTz4Out != null">#{postHolidayTz4Out},</if>
+            <if test="postHolidayTz5 != null">#{postHolidayTz5},</if>
+            <if test="postHolidayTz5Out != null">#{postHolidayTz5Out},</if>
+            <if test="postHolidayTz6 != null">#{postHolidayTz6},</if>
+            <if test="postHolidayTz6Out != null">#{postHolidayTz6Out},</if>
+            <if test="postHolidayTz7 != null">#{postHolidayTz7},</if>
+            <if test="postHolidayTz7Out != null">#{postHolidayTz7Out},</if>
+            <if test="postHolidayTz8 != null">#{postHolidayTz8},</if>
+            <if test="postHolidayTz8Out != null">#{postHolidayTz8Out},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6AppgroupHoliday" parameterType="AcsV6AppgroupHoliday">
+        update acs_v6_appgroup_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="preHolidayTz1 != null">pre_holiday_tz_1 = #{preHolidayTz1},</if>
+            <if test="preHolidayTz1Out != null">pre_holiday_tz_1_out = #{preHolidayTz1Out},</if>
+            <if test="preHolidayTz2 != null">pre_holiday_tz_2 = #{preHolidayTz2},</if>
+            <if test="preHolidayTz2Out != null">pre_holiday_tz_2_out = #{preHolidayTz2Out},</if>
+            <if test="preHolidayTz3 != null">pre_holiday_tz_3 = #{preHolidayTz3},</if>
+            <if test="preHolidayTz3Out != null">pre_holiday_tz_3_out = #{preHolidayTz3Out},</if>
+            <if test="preHolidayTz4 != null">pre_holiday_tz_4 = #{preHolidayTz4},</if>
+            <if test="preHolidayTz4Out != null">pre_holiday_tz_4_out = #{preHolidayTz4Out},</if>
+            <if test="preHolidayTz5 != null">pre_holiday_tz_5 = #{preHolidayTz5},</if>
+            <if test="preHolidayTz5Out != null">pre_holiday_tz_5_out = #{preHolidayTz5Out},</if>
+            <if test="preHolidayTz6 != null">pre_holiday_tz_6 = #{preHolidayTz6},</if>
+            <if test="preHolidayTz6Out != null">pre_holiday_tz_6_out = #{preHolidayTz6Out},</if>
+            <if test="preHolidayTz7 != null">pre_holiday_tz_7 = #{preHolidayTz7},</if>
+            <if test="preHolidayTz7Out != null">pre_holiday_tz_7_out = #{preHolidayTz7Out},</if>
+            <if test="preHolidayTz8 != null">pre_holiday_tz_8 = #{preHolidayTz8},</if>
+            <if test="preHolidayTz8Out != null">pre_holiday_tz_8_out = #{preHolidayTz8Out},</if>
+            <if test="holidayTz1 != null">holiday_tz_1 = #{holidayTz1},</if>
+            <if test="holidayTz1Out != null">holiday_tz_1_out = #{holidayTz1Out},</if>
+            <if test="holidayTz2 != null">holiday_tz_2 = #{holidayTz2},</if>
+            <if test="holidayTz2Out != null">holiday_tz_2_out = #{holidayTz2Out},</if>
+            <if test="holidayTz3 != null">holiday_tz_3 = #{holidayTz3},</if>
+            <if test="holidayTz3Out != null">holiday_tz_3_out = #{holidayTz3Out},</if>
+            <if test="holidayTz4 != null">holiday_tz_4 = #{holidayTz4},</if>
+            <if test="holidayTz4Out != null">holiday_tz_4_out = #{holidayTz4Out},</if>
+            <if test="holidayTz5 != null">holiday_tz_5 = #{holidayTz5},</if>
+            <if test="holidayTz5Out != null">holiday_tz_5_out = #{holidayTz5Out},</if>
+            <if test="holidayTz6 != null">holiday_tz_6 = #{holidayTz6},</if>
+            <if test="holidayTz6Out != null">holiday_tz_6_out = #{holidayTz6Out},</if>
+            <if test="holidayTz7 != null">holiday_tz_7 = #{holidayTz7},</if>
+            <if test="holidayTz7Out != null">holiday_tz_7_out = #{holidayTz7Out},</if>
+            <if test="holidayTz8 != null">holiday_tz_8 = #{holidayTz8},</if>
+            <if test="holidayTz8Out != null">holiday_tz_8_out = #{holidayTz8Out},</if>
+            <if test="postHolidayTz1 != null">post_holiday_tz_1 = #{postHolidayTz1},</if>
+            <if test="postHolidayTz1Out != null">post_holiday_tz_1_out = #{postHolidayTz1Out},</if>
+            <if test="postHolidayTz2 != null">post_holiday_tz_2 = #{postHolidayTz2},</if>
+            <if test="postHolidayTz2Out != null">post_holiday_tz_2_out = #{postHolidayTz2Out},</if>
+            <if test="postHolidayTz3 != null">post_holiday_tz_3 = #{postHolidayTz3},</if>
+            <if test="postHolidayTz3Out != null">post_holiday_tz_3_out = #{postHolidayTz3Out},</if>
+            <if test="postHolidayTz4 != null">post_holiday_tz_4 = #{postHolidayTz4},</if>
+            <if test="postHolidayTz4Out != null">post_holiday_tz_4_out = #{postHolidayTz4Out},</if>
+            <if test="postHolidayTz5 != null">post_holiday_tz_5 = #{postHolidayTz5},</if>
+            <if test="postHolidayTz5Out != null">post_holiday_tz_5_out = #{postHolidayTz5Out},</if>
+            <if test="postHolidayTz6 != null">post_holiday_tz_6 = #{postHolidayTz6},</if>
+            <if test="postHolidayTz6Out != null">post_holiday_tz_6_out = #{postHolidayTz6Out},</if>
+            <if test="postHolidayTz7 != null">post_holiday_tz_7 = #{postHolidayTz7},</if>
+            <if test="postHolidayTz7Out != null">post_holiday_tz_7_out = #{postHolidayTz7Out},</if>
+            <if test="postHolidayTz8 != null">post_holiday_tz_8 = #{postHolidayTz8},</if>
+            <if test="postHolidayTz8Out != null">post_holiday_tz_8_out = #{postHolidayTz8Out},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAcsV6AppgroupHolidayById" parameterType="String">
+        delete from acs_v6_appgroup_holiday where id = #{id}
+    </delete>
+
+    <delete id="deleteAcsV6AppgroupHolidayByIds" parameterType="String">
+        delete from acs_v6_appgroup_holiday where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

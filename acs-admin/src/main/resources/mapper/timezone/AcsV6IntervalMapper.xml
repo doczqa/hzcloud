@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.v6.mapper.AcsV6IntervalMapper">
+    
+    <resultMap type="AcsV6Interval" id="AcsV6IntervalResult">
+        <result property="id"    column="id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectAcsV6IntervalVo">
+        select id, start_time, end_time from acs_v6_interval
+    </sql>
+
+    <select id="selectAcsV6IntervalList" parameterType="AcsV6Interval" resultMap="AcsV6IntervalResult">
+        <include refid="selectAcsV6IntervalVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAcsV6IntervalById" parameterType="String" resultMap="AcsV6IntervalResult">
+        <include refid="selectAcsV6IntervalVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAcsV6Interval" parameterType="AcsV6Interval">
+        insert into acs_v6_interval
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="startTime != null and startTime != ''">start_time,</if>
+            <if test="endTime != null and endTime != ''">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="startTime != null and startTime != ''">#{startTime},</if>
+            <if test="endTime != null and endTime != ''">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAcsV6Interval" parameterType="AcsV6Interval">
+        update acs_v6_interval
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="startTime != null and startTime != ''">start_time = #{startTime},</if>
+            <if test="endTime != null and endTime != ''">end_time = #{endTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAcsV6IntervalById" parameterType="String">
+        delete from acs_v6_interval where id = #{id}
+    </delete>
+
+    <delete id="deleteAcsV6IntervalByIds" parameterType="String">
+        delete from acs_v6_interval where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

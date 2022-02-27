@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.group.mapper.AscDoorGroupMapper">
+    
+    <resultMap type="AscDoorGroup" id="AscDoorGroupResult">
+        <result property="groupId"    column="group_id"    />
+        <result property="groupName"    column="group_name"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="weekTemplateId"    column="week_template_id"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectAscDoorGroupVo">
+        select a.group_id, a.group_name, a.dept_id, a.week_template_id, a.status, a.del_flag, a.create_by, a.create_time, a.update_by, a.update_time from asc_door_group a
+        left join sys_dept d on a.dept_id=d.dept_id
+    </sql>
+
+    <select id="selectAscDoorGroupList" parameterType="AscDoorGroup" resultMap="AscDoorGroupResult">
+        <include refid="selectAscDoorGroupVo"/>
+        <where>
+            and 1=1
+            <if test="groupName != null  and groupName != ''"> and a.group_name like concat('%', #{groupName}, '%')</if>
+            <if test="status != null  and status != ''"> and a.status = #{status}</if>
+        </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectAscDoorGroupById" parameterType="Long" resultMap="AscDoorGroupResult">
+        <include refid="selectAscDoorGroupVo"/>
+        where a.group_id = #{groupId}
+    </select>
+        
+    <insert id="insertAscDoorGroup" parameterType="AscDoorGroup" useGeneratedKeys="true" keyProperty="groupId">
+        insert into asc_door_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupName != null and groupName != ''">group_name,</if>
+            <if test="status != null">status,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="weekTemplateId != null">week_template_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupName != null and groupName != ''">#{groupName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="weekTemplateId != null">#{weekTemplateId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAscDoorGroup" parameterType="AscDoorGroup">
+        update asc_door_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupName != null and groupName != ''">group_name = #{groupName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="weekTemplateId != null">week_template_id = #{weekTemplateId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where group_id = #{groupId}
+    </update>
+
+    <delete id="deleteAscDoorGroupById" parameterType="Long">
+        delete from asc_door_group where group_id = #{groupId}
+    </delete>
+
+    <delete id="deleteAscDoorGroupByIds" parameterType="String">
+        delete from asc_door_group where group_id in 
+        <foreach item="groupId" collection="array" open="(" separator="," close=")">
+            #{groupId}
+        </foreach>
+    </delete>
+</mapper>

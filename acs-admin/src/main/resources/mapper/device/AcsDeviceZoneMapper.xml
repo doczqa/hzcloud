@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzcloud.device.mapper.AcsDeviceZoneMapper">
+    
+    <resultMap type="AcsDeviceZone" id="AcsDeviceZoneResult">
+        <result property="zoneId"    column="zone_id"    />
+        <result property="zoneName"    column="zone_name"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="deptName" column="dept_name"  />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAcsDeviceZoneVo">
+        select zone_id, zone_name, dept_id, status, del_flag, create_by, create_time, update_by, update_time, remark from acs_device_zone
+    </sql>
+
+    <select id="selectAcsDeviceZoneList" parameterType="AcsDeviceZone" resultMap="AcsDeviceZoneResult">
+         select z.zone_id, z.zone_name, z.dept_id, d.dept_name, z.status, z.del_flag, z.create_by, z.create_time, z.update_by, z.update_time, z.remark from acs_device_zone z
+         left join sys_dept d on z.dept_id = d.dept_id
+        <where> 
+            z.del_flag = '0'
+            <if test="zoneName != null  and zoneName != ''"> and zone_name like concat('%', #{zoneName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="deptId != null and deptId != 0">
+			    AND (z.dept_id = #{deptId} OR z.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors) ))
+		    </if>
+            <!-- 数据范围过滤 -->
+		    ${params.dataScope}
+        </where>
+    </select>
+    
+    <select id="selectAcsDeviceZoneById" parameterType="Long" resultMap="AcsDeviceZoneResult">
+        select z.zone_id, z.zone_name, z.dept_id, d.dept_name, z.status, z.del_flag, z.create_by, z.create_time, z.update_by, z.update_time, z.remark from acs_device_zone z
+         left join sys_dept d on z.dept_id = d.dept_id
+        where z.zone_id = #{zoneId}
+    </select>
+        
+    <insert id="insertAcsDeviceZone" parameterType="AcsDeviceZone" useGeneratedKeys="true" keyProperty="zoneId">
+        insert into acs_device_zone
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zoneName != null and zoneName != ''">zone_name,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="remark != null">remark,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zoneName != null and zoneName != ''">#{zoneName},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateAcsDeviceZone" parameterType="AcsDeviceZone">
+        update acs_device_zone
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="zoneName != null and zoneName != ''">zone_name = #{zoneName},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </trim>
+        where zone_id = #{zoneId}
+    </update>
+
+    <delete id="deleteAcsDeviceZoneById" parameterType="Long">
+        update acs_device_zone set del_flag = '2' where zone_id = #{zoneId}
+    </delete>
+
+    <delete id="deleteAcsDeviceZoneByIds" parameterType="Long">
+        update acs_device_zone set del_flag = '2' where zone_id in 
+        <foreach item="zoneId" collection="array" open="(" separator="," close=")">
+            #{zoneId}
+        </foreach>
+    </delete>
+
+    <select id="checkZoneNameUnique" parameterType="String" resultType="int">
+		select count(1) from acs_device_zone where zone_name = #{zoneName} limit 1
+	</select>
+</mapper>
