@@ -27,8 +27,10 @@ public class V6Controller implements AcsDeviceController{
     public AcsDeviceResult Login(String ip, String username, String pw, int port, String identifier) {
         boolean ret = this.v6.ConnectSocket(ip, port);
         if(ret){
+            log.info("登录成功");
             return new AcsDeviceResult(ret,"控制器登陆成功");
         }
+        log.info("登录失败");
         return new AcsDeviceResult(false, "控制器登陆失败");
     }
 

@@ -30,10 +30,10 @@
         </dependency>
 
         <!-- 通用工具-->
-        <dependency>
-            <groupId>com.hzcloud</groupId>
-            <artifactId>acs-common</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.hzcloud</groupId>-->
+<!--            <artifactId>acs-common</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
@@ -66,6 +66,42 @@
             <version>${fastjson.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <!-- JSON工具类 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!--常用工具类 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.0</version>
+        </dependency>
     </dependencies>
 
 </project>
